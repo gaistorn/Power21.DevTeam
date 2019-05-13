@@ -93,6 +93,7 @@ ENV MONGO_SPARK_CONNECTOR_VERSION 2.4.0
 ENV MONGO_SPARK_VERSION 2.4.3
 ADD ./mongo-spark-connector/mongo-spark-connector_${MONGO_SPARK_VERSION}_${MONGO_SPARK_CONNECTOR_VERSION} $SPARK_HOME/org.mongodb.spark
 RUN cd $SPARK_HOME/org.mongodb.spark && \
+    chmod +x ./sbt \
     ./sbt "set test in assembly := {}" clean assembly
 
 # download and build xgboost
