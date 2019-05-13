@@ -84,7 +84,7 @@ RUN conda install -y -c conda-forge cassandra-driver
 ENV GRAPH_FRAMES_VERSION 0.7.1-spark2.4.3-s_2.11
 ADD ./graphframes-dist/graphframes-${GRAPH_FRAMES_VERSION} $SPARK_HOME/graphframes
 RUN cd $SPARK_HOME/graphframes && \
-    chmod +x ./build/sbt \
+    chmod +x ./build/sbt && \
     ./build/sbt "set test in assembly := {}" clean assembly && \
     mv $SPARK_HOME/graphframes/python/graphframes $SPARK_HOME/python/pyspark
 
@@ -93,7 +93,7 @@ ENV MONGO_SPARK_CONNECTOR_VERSION 2.4.0
 ENV MONGO_SPARK_VERSION 2.4.3
 ADD ./mongo-spark-connector/mongo-spark-connector_${MONGO_SPARK_VERSION}_${MONGO_SPARK_CONNECTOR_VERSION} $SPARK_HOME/org.mongodb.spark
 RUN cd $SPARK_HOME/org.mongodb.spark && \
-    chmod +x ./sbt \
+    chmod +x ./sbt && \
     ./sbt "set test in assembly := {}" clean assembly
 
 # download and build xgboost
