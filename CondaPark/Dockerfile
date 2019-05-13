@@ -84,6 +84,7 @@ RUN conda install -y -c conda-forge cassandra-driver
 ENV GRAPH_FRAMES_VERSION 0.7.1-spark2.4.3-s_2.11
 ADD ./graphframes-dist/graphframes-${GRAPH_FRAMES_VERSION} $SPARK_HOME/graphframes
 RUN cd $SPARK_HOME/graphframes && \
+    chmod +x ./build/sbt \
     ./build/sbt "set test in assembly := {}" clean assembly && \
     mv $SPARK_HOME/graphframes/python/graphframes $SPARK_HOME/python/pyspark
 
