@@ -34,13 +34,13 @@ RUN curl -sL --retry 3 \
  && chown -R root:root $HADOOP_HOME
 
 # SPARK
-ENV SPARK_VERSION 2.1.1
-ENV SPARK_PACKAGE spark-${SPARK_VERSION}-bin-without-hadoop
+ENV SPARK_VERSION 2.4.3
+ENV SPARK_PACKAGE spark-${SPARK_VERSION}-bin-hadoop2.7
 ENV SPARK_HOME /usr/spark-${SPARK_VERSION}
 ENV SPARK_DIST_CLASSPATH="$HADOOP_HOME/etc/hadoop/*:$HADOOP_HOME/share/hadoop/common/lib/*:$HADOOP_HOME/share/hadoop/common/*:$HADOOP_HOME/share/hadoop/hdfs/*:$HADOOP_HOME/share/hadoop/hdfs/lib/*:$HADOOP_HOME/share/hadoop/hdfs/*:$HADOOP_HOME/share/hadoop/yarn/lib/*:$HADOOP_HOME/share/hadoop/yarn/*:$HADOOP_HOME/share/hadoop/mapreduce/lib/*:$HADOOP_HOME/share/hadoop/mapreduce/*:$HADOOP_HOME/share/hadoop/tools/lib/*"
 ENV PATH $PATH:${SPARK_HOME}/bin
 RUN curl -sL --retry 3 \
-  "http://d3kbcqa49mib13.cloudfront.net/${SPARK_PACKAGE}.tgz" \
+  "http://apache.mirror.cdnetworks.com/spark/spark-${SPARK_VERSION}/$SPARK_PACKAGE.tgz" \
   | gunzip \
   | tar x -C /usr/ \
  && mv /usr/$SPARK_PACKAGE $SPARK_HOME \
@@ -81,15 +81,15 @@ RUN conda install -y gcc
 RUN conda install -y -c conda-forge cassandra-driver
 
 # Install Graphframes
-ENV GRAPH_FRAMES_VERSION 0.4.0-spark2.1-s_2.11
+ENV GRAPH_FRAMES_VERSION 0.7.1-spark2.4.3-s_2.11
 ADD ./graphframes-dist/graphframes-${GRAPH_FRAMES_VERSION} $SPARK_HOME/graphframes
 RUN cd $SPARK_HOME/graphframes && \
     ./build/sbt "set test in assembly := {}" clean assembly && \
     mv $SPARK_HOME/graphframes/python/graphframes $SPARK_HOME/python/pyspark
 
 # Install Mongo-spark-connector
-ENV MONGO_SPARK_CONNECTOR_VERSION 2.0.0
-ENV MONGO_SPARK_VERSION 2.10
+ENV MONGO_SPARK_CONNECTOR_VERSION 2.4.0
+ENV MONGO_SPARK_VERSION 2.4.3
 ADD ./mongo-spark-connector/mongo-spark-connector_${MONGO_SPARK_VERSION}_${MONGO_SPARK_CONNECTOR_VERSION} $SPARK_HOME/org.mongodb.spark
 RUN cd $SPARK_HOME/org.mongodb.spark && \
     ./sbt "set test in assembly := {}" clean assembly
