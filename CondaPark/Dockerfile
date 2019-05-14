@@ -55,7 +55,7 @@ RUN apt-get update --fix-missing && apt-get install -y wget bzip2 ca-certificate
 RUN apt-get install -y openjdk-8-jdk
 
 RUN echo 'export PATH=/opt/conda/bin:$PATH' > /etc/profile.d/conda.sh && \
-    wget --quiet https://repo.anaconda.com/archive/Anaconda3-2019.03-Linux-x86_64.sh -O ~/anaconda.sh && \
+    wget --quiet https://repo.anaconda.com/archive/Anaconda2-2019.03-Linux-x86_64.sh -O ~/anaconda.sh && \
     /bin/bash ~/anaconda.sh -b -p /opt/conda && \
     rm ~/anaconda.sh
 
