@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  daegunmqttsubscribe:
+    image: ${DOCKER_REGISTRY-}daegunmqttsubscribe
+    build:
+      context: .
+      dockerfile: DataService/DaegunMQTTSubscribe/Dockerfile

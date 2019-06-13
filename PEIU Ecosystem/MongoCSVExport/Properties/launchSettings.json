@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "MongoCSVExport": {
+      "commandName": "Project",
+      "commandLineArgs": "--host=192.168.0.40:27088 --database=PEIU --collection=ContractInfo --out=test.csv"
+    }
+  }
+}
